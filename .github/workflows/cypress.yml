@@ -1,20 +1,20 @@
-name: Cypress Tests
+name: Cypress Tests New
 
-on: [push, pull_request]
+on: push
 
 jobs:
   cypress-run:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '22'
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Install dependencies
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+
+      - name: Install Dependencies
         run: npm install
 
       - name: Cache Cypress binary
@@ -27,29 +27,13 @@ jobs:
       
       - name: Make Cypress Binary Executable
         run: chmod +x ./node_modules/.bin/cypress
-
-      - name: Run Cypress tests
-        env:
-          CYPRESS_baseUrl: 'http://localhost:3000'
-        run: |
-          npx cypress run --reporter cypress-mochawesome-reporter --reporter-options reportDir=cypress/reports/html --config video=false
+    
       
-      - name: Run Cypress Tests (Parallel)
-        run: npx cypress run --record --parallel --ci-build-id ${{ github.run_id }} --group ${{ matrix.shard }} --shard ${{ matrix.shard }}
-        env:
-            CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          
       - name: Install Cypress
         run: npx cypress install
 
-      - name: Upload Test Results
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: cypress-report
-          path: cypress/reports/html/
       
-      - name: Generate Report
-        run: |
-          npx mochawesome-merge cypress/reports/html/*.json > cypress/reports/html/report.json
-          npx mochawesome-report-generator cypress/reports/html/report.json
+      # Install npm dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run
+        run: npm run headless
