@@ -33,10 +33,9 @@ jobs:
     
       
       - name: Run Cypress Tests (Parallel)
-        run: npx cypress run --record --parallel --ci-build-id ${{ github.run_id }} --group ${{ matrix.shard }} --shard ${{ matrix.shard }}
+        run: npx cypress run --record --parallel --ci-build-id ${{ github.run_id }} --group ${{ matrix.shard }}
         env:
           CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
-
       
       # Install npm dependencies, cache them correctly
       # and run all Cypress tests
