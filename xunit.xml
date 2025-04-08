@@ -1,0 +1,7 @@
+<testsuite name="Mocha Tests" tests="5" failures="0" errors="0" skipped="0" timestamp="Mon, 07 Apr 2025 06:49:18 GMT" time="28.379">
+<testcase classname="Alert Handling" name="My First Test Case" time="6.217"/>
+<testcase classname="Alert Handling" name="My Second Test Case- JS Alerts" time="4.43"/>
+<testcase classname="Alert Handling" name="My Third Test Case- JS Confirm Alerts -OK button" time="1.023"/>
+<testcase classname="Alert Handling" name="My Third Test Case- JS Confirm Alerts -Cancel button" time="1.149"/>
+<testcase classname="Alert Handling" name="My Fourth Test Case- JS Confirm Alerts -Using STUB concept" time="1.713"/>
+</testsuite>
