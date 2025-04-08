@@ -13,10 +13,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 22
+
+      - name: Install Dependencies
+        run: npm install
+
       # Install npm dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
-        uses: cypress-io/github-action@v6
-        with:
-          build: npm run build
-          start: npm start
+        run: npm run headless
