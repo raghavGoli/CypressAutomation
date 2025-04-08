@@ -24,14 +24,15 @@ jobs:
           key: ${{ runner.os }}-cypress-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-cypress
-
+      
+      - name: Make Cypress Binary Executable
+        run: chmod +x ./node_modules/.bin/cypress
+    
       
       - name: Install Cypress
         run: npx cypress install
 
-      - name: Make Cypress Binary Executable
-        run: chmod +x ./node_modules/.bin/cypress
-
+      
       # Install npm dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
