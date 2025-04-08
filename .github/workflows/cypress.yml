@@ -5,6 +5,9 @@ on: push
 jobs:
   cypress-run:
     runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        shard: [1/2, 2/2] # Splits the tests into two parallel shards
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,8 +32,10 @@ jobs:
         run: chmod +x ./node_modules/.bin/cypress
     
       
-      - name: Install Cypress
-        run: npx cypress install
+      - name: Run Cypress Tests (Parallel)
+        run: npx cypress run --record --parallel --ci-build-id ${{ github.run_id }} --group ${{ matrix.shard }} --shard ${{ matrix.shard }}
+        env:
+          CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
 
       
       # Install npm dependencies, cache them correctly
